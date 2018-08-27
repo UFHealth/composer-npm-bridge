@@ -1,5 +1,5 @@
 {
-    "name": "eloquent/composer-npm-bridge",
+    "name": "ufhealth/composer-npm-bridge",
     "description": "NPM integration for Composer packages.",
     "keywords": ["composer", "npm", "package", "integration", "bridge", "plugin", "composer-plugin"],
     "homepage": "https://github.com/eloquent/composer-npm-bridge",
@@ -9,6 +9,11 @@
             "name": "Erin Millard",
             "email": "ezzatron@gmail.com",
             "homepage": "http://ezzatron.com/"
+        },
+        {
+            "name": "Chris Wiegman",
+            "email": "cwiegman@ufl.edu",
+            "homepage": "https://webservices.ufhealth.org"
         }
     ],
     "type": "composer-plugin",
