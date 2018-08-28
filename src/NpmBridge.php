@@ -18,15 +18,16 @@ class NpmBridge
      *
      * @access private
      *
-     * @param IOInterface     $io           The i/o interface to use.
+     * @param IOInterface $io The i/o interface to use.
      * @param NpmVendorFinder $vendorFinder The vendor finder to use.
-     * @param NpmClient       $client       The NPM client to use.
+     * @param NpmClient $client The NPM client to use.
      */
     public function __construct(
         IOInterface $io,
         NpmVendorFinder $vendorFinder,
         NpmClient $client
-    ) {
+    )
+    {
         $this->io = $io;
         $this->vendorFinder = $vendorFinder;
         $this->client = $client;
@@ -35,13 +36,14 @@ class NpmBridge
     /**
      * Install NPM dependencies for a Composer project and its dependencies.
      *
-     * @param Composer $composer  The main Composer object.
-     * @param bool     $isDevMode True if dev mode is enabled.
+     * @param Composer $composer The main Composer object.
+     * @param bool $isDevMode True if dev mode is enabled.
+     * @param bool $installDev True if dev components should be installed.
      *
      * @throws NpmNotFoundException      If the npm executable cannot be located.
      * @throws NpmCommandFailedException If the operation fails.
      */
-    public function install(Composer $composer, bool $isDevMode = true)
+    public function install(Composer $composer, bool $isDevMode = true, $installDev = false)
     {
         $this->io->write(
             '<info>Installing NPM dependencies for root project</info>'
@@ -53,7 +55,7 @@ class NpmBridge
             $this->io->write('Nothing to install');
         }
 
-        $this->installForVendors($composer);
+        $this->installForVendors($composer, $installDev);
     }
 
     /**
@@ -83,15 +85,16 @@ class NpmBridge
     /**
      * Returns true if the supplied package requires the Composer NPM bridge.
      *
-     * @param PackageInterface $package                The package to inspect.
-     * @param bool             $includeDevDependencies True if the dev dependencies should also be inspected.
+     * @param PackageInterface $package The package to inspect.
+     * @param bool $includeDevDependencies True if the dev dependencies should also be inspected.
      *
      * @return bool True if the package requires the bridge.
      */
     public function isDependantPackage(
         PackageInterface $package,
         bool $includeDevDependencies = false
-    ): bool {
+    ): bool
+    {
         foreach ($package->getRequires() as $link) {
             if ('eloquent/composer-npm-bridge' === $link->getTarget()) {
                 return true;
@@ -126,10 +129,20 @@ class NpmBridge
                     )
                 );
 
+                $this->io->write(
+                    sprintf(
+                        '<info>Installing NPM dependencies for %s</info>',
+                        $package->getPrettyName()
+                    )
+                );
+
+                $extra = $package->getExtra();
+                $isDevMode = is_array($extra) && isset($extra['install-npm-dev']) && true === $extra['install-npm-dev'] ? true : false;
+
                 $this->client->install(
                     $composer->getInstallationManager()
                         ->getInstallPath($package),
-                    false
+                    $isDevMode
                 );
             }
         } else {
