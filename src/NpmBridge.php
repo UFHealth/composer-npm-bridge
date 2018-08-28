@@ -96,14 +96,14 @@ class NpmBridge
     ): bool
     {
         foreach ($package->getRequires() as $link) {
-            if ('eloquent/composer-npm-bridge' === $link->getTarget()) {
+            if ('ufhealth/composer-npm-bridge' === $link->getTarget()) {
                 return true;
             }
         }
 
         if ($includeDevDependencies) {
             foreach ($package->getDevRequires() as $link) {
-                if ('eloquent/composer-npm-bridge' === $link->getTarget()) {
+                if ('ufhealth/composer-npm-bridge' === $link->getTarget()) {
                     return true;
                 }
             }
