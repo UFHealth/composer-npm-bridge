@@ -18,7 +18,7 @@
     ],
     "type": "composer-plugin",
     "require": {
-        "php": ">=7",
+        "php": ">=7.2",
         "composer-plugin-api": "^1"
     },
     "require-dev": {
