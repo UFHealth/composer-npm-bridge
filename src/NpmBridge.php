@@ -129,13 +129,6 @@ class NpmBridge
                     )
                 );
 
-                $this->io->write(
-                    sprintf(
-                        '<info>Installing NPM dependencies for %s</info>',
-                        $package->getPrettyName()
-                    )
-                );
-
                 $extra = $package->getExtra();
                 $isDevMode = is_array($extra) && isset($extra['install-npm-dev']) && true === $extra['install-npm-dev'] ? true : false;
 
