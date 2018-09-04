@@ -70,7 +70,6 @@ class NpmClient
      *
      * @param string|null $path The path to the NPM project, or null to use the current working directory.
      *
-     * @throws NpmNotFoundException      If the npm executable cannot be located.
      * @throws NpmCommandFailedException If the operation fails.
      */
     public function update(string $path = null)
