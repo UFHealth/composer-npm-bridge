@@ -53,8 +53,8 @@ class NpmBridgePlugin implements PluginInterface, EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ScriptEvents::POST_INSTALL_CMD => 'onPostInstallCmd',
-            ScriptEvents::POST_UPDATE_CMD => 'onPostUpdateCmd',
+            ScriptEvents::POST_INSTALL_CMD => array('onPostInstallCmd',10),
+            ScriptEvents::POST_UPDATE_CMD => array('onPostUpdateCmd',10),
         ];
     }
 
